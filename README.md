@@ -20,7 +20,10 @@ This script performs the following:
 ## Syntax example
 
 Input example line:
+
 `R1        4k7           R_0603                     154.2720  -121.1820   90.0000  top`
+
 Output example line:
+
 `R1,4k7,154.27mm,-121.18mm,T,90,R_0603`
 
