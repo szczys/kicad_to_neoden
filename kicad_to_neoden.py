@@ -1,304 +1,11 @@
+from __future__ import print_function
+
 #Translator for converting KiCAD .pos files to .csv files for a NEODEN pick and place machine
 #Paste relevant rows of the .pos files below and chance the trailing_letter
 #to be "T" for top or "B" for bottom
 
-trailing_letter = "T"
-
-raw = '''DR1C1     D         LED_0603_BLANK     -81.9506    15.2806   46.0000  top
-DR1C2     D         LED_0603_BLANK     -77.8891    18.4531   39.0000  top
-DR1C3     D         LED_0603_BLANK     -68.1113    24.1232   29.0000  top
-DR1C4     D         LED_0603_BLANK     -61.6356    26.7462   20.0000  top
-DR1C5     D         LED_0603_BLANK     -53.6169    29.3167   15.0000  top
-DR1C6     D         LED_0603_BLANK     -45.0850    31.0845   10.0000  top
-DR1C7     D         LED_0603_BLANK     -35.5117    32.3063    5.0000  top
-DR1C8     D         LED_0603_BLANK     -79.0194    13.7160   40.0000  top
-DR1C9     D         LED_0603_BLANK     -75.6888    16.0082   40.0000  top
-DR1C10    D         LED_0603_BLANK     -66.2178    21.4655   22.5000  top
-DR1C11    D         LED_0603_BLANK     -58.2371    24.2722   17.5000  top
-DR1C12    D         LED_0603_BLANK     -50.1294    26.3550   15.0000  top
-DR1C13    D         LED_0603_BLANK     -41.6408    28.4632   12.5000  top
-DR1C14    D         LED_0603_BLANK     -31.7957    29.6240    2.5000  top
-DR1C15    D         LED_0603_BLANK     -26.2636    32.9768    2.5000  top
-DR1C16    D         LED_0603_BLANK     -16.3170    33.0327    0.0000  top
-DR1C17    D         LED_0603_BLANK      -5.8115    32.5857  357.5000  top
-DR1C18    D         LED_0603_BLANK       5.3848    31.1404  352.5000  top
-DR2C1     D         LED_0603_BLANK     -77.0890    12.1412   35.0000  top
-DR2C2     D         LED_0603_BLANK     -70.7187    15.7531   30.0000  top
-DR2C3     D         LED_0603_BLANK     -63.4238    19.1186   22.5000  top
-DR2C4     D         LED_0603_BLANK     -55.7378    21.6814   15.0000  top
-DR2C5     D         LED_0603_BLANK     -47.5488    23.8150   15.0000  top
-DR2C6     D         LED_0603_BLANK     -38.4556    25.7200   10.0000  top
-DR2C7     D         LED_0603_BLANK     -28.8900    26.8300    2.5000  top
-DR2C8     D         LED_0603_BLANK     -22.2123    30.0431    2.5000  top
-DR2C9     D         LED_0603_BLANK     -12.5832    30.0076    0.0000  top
-DR2C10    D         LED_0603_BLANK      -1.7272    29.4742    0.0000  top
-DR2C11    D         LED_0603_BLANK       8.1305    29.0932  357.5000  top
-DR2C12    D         LED_0603_BLANK      18.7477    28.2829  352.5000  top
-DR2C13    D         LED_0603_BLANK      26.4592    27.2491  352.5000  top
-DR2C14    D         LED_0603_BLANK      35.2882    25.8801  350.0000  top
-DR2C15    D         LED_0603_BLANK      43.9496    24.3992  350.0000  top
-DR2C16    D         LED_0603_BLANK      52.4434    22.7228  350.0000  top
-DR2C17    D         LED_0603_BLANK      76.2711    11.8669  340.0000  top
-DR2C18    D         LED_0603_BLANK      76.5835    10.2057  340.0000  top
-DR3C1     D         LED_0603_BLANK     -75.7174    10.1219   30.0000  top
-DR3C2     D         LED_0603_BLANK     -68.3641    13.4747   25.0000  top
-DR3C3     D         LED_0603_BLANK     -61.1607    16.5760   22.5000  top
-DR3C4     D         LED_0603_BLANK     -53.4975    19.1973   15.0000  top
-DR3C5     D         LED_0603_BLANK     -45.3746    21.1938   15.0000  top
-DR3C6     D         LED_0603_BLANK     -35.9715    22.7330    7.5000  top
-DR3C7     D         LED_0603_BLANK     -26.5709    23.8125    2.5000  top
-DR3C8     D         LED_0603_BLANK     -19.6418    27.1374    2.5000  top
-DR3C9     D         LED_0603_BLANK      -9.3320    27.0256    0.0000  top
-DR3C10    D         LED_0603_BLANK       1.1481    26.7462    0.0000  top
-DR3C11    D         LED_0603_BLANK      10.8966    26.3830  357.5000  top
-DR3C12    D         LED_0603_BLANK      20.4013    25.5626  355.0000  top
-DR3C13    D         LED_0603_BLANK      28.9966    24.6075  355.0000  top
-DR3C14    D         LED_0603_BLANK      37.9781    23.3477  350.0000  top
-DR3C15    D         LED_0603_BLANK      46.1569    21.9685  350.0000  top
-DR3C16    D         LED_0603_BLANK      53.6448    20.8229  350.0000  top
-DR3C17    D         LED_0603_BLANK      61.9150    19.0627  347.5000  top
-DR3C18    D         LED_0603_BLANK      68.3565    17.3736  345.0000  top
-DR4C1     D         LED_0603_BLANK     -74.6963     8.2499   27.0000  top
-DR4C2     D         LED_0603_BLANK     -66.9696    11.2116   20.0000  top
-DR4C3     D         LED_0603_BLANK     -59.3166    14.1173   22.5000  top
-DR4C4     D         LED_0603_BLANK     -51.9125    16.2966   15.0000  top
-DR4C5     D         LED_0603_BLANK     -43.4645    18.1661   12.5000  top
-DR4C6     D         LED_0603_BLANK     -34.0055    19.5174    7.5000  top
-DR4C7     D         LED_0603_BLANK     -24.2240    20.5994    2.5000  top
-DR4C8     D         LED_0603_BLANK     -17.0434    24.1478    2.5000  top
-DR4C9     D         LED_0603_BLANK      -6.7310    24.1757    0.0000  top
-DR4C10    D         LED_0603_BLANK       2.5044    23.9116    0.0000  top
-DR4C11    D         LED_0603_BLANK      12.8524    23.3934  355.0000  top
-DR4C12    D         LED_0603_BLANK      22.0066    22.5552  352.5000  top
-DR4C13    D         LED_0603_BLANK      30.9270    21.6002  355.0000  top
-DR4C14    D         LED_0603_BLANK      39.9085    20.4622  352.5000  top
-DR4C15    D         LED_0603_BLANK      47.7215    19.3700  352.5000  top
-DR4C16    D         LED_0603_BLANK      54.5389    18.4480  352.5000  top
-DR4C17    D         LED_0603_BLANK      62.8904    16.9672  347.5000  top
-DR4C18    D         LED_0603_BLANK      69.7586    15.4229  347.5000  top
-DR5C1     D         LED_0603_BLANK     -73.8429     6.6243   22.0000  top
-DR5C2     D         LED_0603_BLANK     -66.1162     9.2151   20.0000  top
-DR5C3     D         LED_0603_BLANK     -57.7799    11.6027   15.0000  top
-DR5C4     D         LED_0603_BLANK     -50.2082    13.0556   15.0000  top
-DR5C5     D         LED_0603_BLANK     -41.7170    14.5898   10.0000  top
-DR5C6     D         LED_0603_BLANK     -31.9634    15.5448    5.0000  top
-DR5C7     D         LED_0603_BLANK     -22.2682    16.4363    2.5000  top
-DR5C8     D         LED_0603_BLANK     -14.9200    20.8788    2.5000  top
-DR5C9     D         LED_0603_BLANK      -5.3899    20.7670    0.0000  top
-DR5C10    D         LED_0603_BLANK       4.2469    21.1277    0.0000  top
-DR5C11    D         LED_0603_BLANK      14.0818    20.4038  355.0000  top
-DR5C12    D         LED_0603_BLANK      23.4696    19.6088  355.0000  top
-DR5C13    D         LED_0603_BLANK      32.2072    18.7960  355.0000  top
-DR5C14    D         LED_0603_BLANK      41.1074    17.8410  352.5000  top
-DR5C15    D         LED_0603_BLANK      49.0906    16.9393  355.0000  top
-DR5C16    D         LED_0603_BLANK      56.7741    15.9055  352.5000  top
-DR5C17    D         LED_0603_BLANK      63.8454    14.7117  350.0000  top
-DR5C18    D         LED_0603_BLANK      70.6120    13.4315  350.0000  top
-DR6C1     D         LED_0603_BLANK     -73.4009     4.9784   18.0000  top
-DR6C2     D         LED_0603_BLANK     -65.3491     6.9088   10.0000  top
-DR6C3     D         LED_0603_BLANK     -56.9976     8.6690   10.0000  top
-DR6C4     D         LED_0603_BLANK     -49.3700     9.9263   12.5000  top
-DR6C5     D         LED_0603_BLANK     -40.6603    11.0338    5.0000  top
-DR6C6     D         LED_0603_BLANK     -30.5613    11.7602    2.5000  top
-DR6C7     D         LED_0603_BLANK     -20.8153    12.2453    2.5000  top
-DR6C8     D         LED_0603_BLANK     -12.9921    16.9393    0.0000  top
-DR6C9     D         LED_0603_BLANK      -2.9820    16.9418    0.0000  top
-DR6C10    D         LED_0603_BLANK       6.4262    16.9774    0.0000  top
-DR6C11    D         LED_0603_BLANK      15.4940    16.5964    0.0000  top
-DR6C12    D         LED_0603_BLANK      24.8310    15.9918  357.5000  top
-DR6C13    D         LED_0603_BLANK      33.0200    15.4534    0.0000  top
-DR6C14    D         LED_0603_BLANK      42.5704    14.5085  355.0000  top
-DR6C15    D         LED_0603_BLANK      50.0685    14.0056  355.0000  top
-DR6C16    D         LED_0603_BLANK      57.7240    13.1674  352.5000  top
-DR6C17    D         LED_0603_BLANK      64.8411    12.2326  352.5000  top
-DR6C18    D         LED_0603_BLANK      71.5670    11.1557  352.5000  top
-DR7C1     D         LED_0603_BLANK     -72.9742     3.4544   13.5000  top
-DR7C2     D         LED_0603_BLANK     -65.2318     5.0259   10.0000  top
-DR7C3     D         LED_0603_BLANK     -56.5226     5.8191    5.0000  top
-DR7C4     D         LED_0603_BLANK     -48.2803     6.6853   10.0000  top
-DR7C5     D         LED_0603_BLANK     -39.7662     7.3355    2.5000  top
-DR7C6     D         LED_0603_BLANK     -30.0888     7.7826    2.5000  top
-DR7C7     D         LED_0603_BLANK     -20.2565     8.1102    2.5000  top
-DR7C8     D         LED_0603_BLANK     -11.8161    12.3850    0.0000  top
-DR7C9     D         LED_0603_BLANK      -1.7882    12.1869    0.0000  top
-DR7C10    D         LED_0603_BLANK       7.4879    12.3850    0.0000  top
-DR7C11    D         LED_0603_BLANK      16.3728    12.2174    0.0000  top
-DR7C12    D         LED_0603_BLANK      25.7861    11.8669    0.0000  top
-DR7C13    D         LED_0603_BLANK      34.5084    11.4554    0.0000  top
-DR7C14    D         LED_0603_BLANK      43.3222    10.7696  355.0000  top
-DR7C15    D         LED_0603_BLANK      51.1861    10.5689  357.5000  top
-DR7C16    D         LED_0603_BLANK      58.7299    10.0660  355.0000  top
-DR7C17    D         LED_0603_BLANK      65.5320     9.4488  355.0000  top
-DR7C18    D         LED_0603_BLANK      72.0954     8.8392  355.0000  top
-DR8C1     D         LED_0603_BLANK     -72.7913     1.5646   10.0000  top
-DR8C2     D         LED_0603_BLANK     -64.4550     2.1336    5.0000  top
-DR8C3     D         LED_0603_BLANK     -56.0756     2.4663    2.5000  top
-DR8C4     D         LED_0603_BLANK     -47.8536     2.9667    2.5000  top
-DR8C5     D         LED_0603_BLANK     -39.5021     3.2309    0.0000  top
-DR8C6     D         LED_0603_BLANK     -29.9720     3.1699    0.0000  top
-DR8C7     D         LED_0603_BLANK     -19.7536     3.2487    0.0000  top
-DR8C8     D         LED_0603_BLANK     -10.8128     8.1661    0.0000  top
-DR8C9     D         LED_0603_BLANK      -0.8382     8.1077    0.0000  top
-DR8C10    D         LED_0603_BLANK       8.4938     8.2753    0.0000  top
-DR8C11    D         LED_0603_BLANK      17.3787     8.1077    0.0000  top
-DR8C12    D         LED_0603_BLANK      26.4363     8.0670    0.0000  top
-DR8C13    D         LED_0603_BLANK      34.6456     7.6911    0.0000  top
-DR8C14    D         LED_0603_BLANK      43.7693     7.4371  357.5000  top
-DR8C15    D         LED_0603_BLANK      51.8287     7.2161  357.5000  top
-DR8C16    D         LED_0603_BLANK      59.1490     6.8809  357.5000  top
-DR8C17    D         LED_0603_BLANK      65.8978     6.5430  355.0000  top
-DR8C18    D         LED_0603_BLANK      72.8269     6.1976  357.5000  top
-DR9C1     D         LED_0603_BLANK     -72.7304    -0.0203    3.0000  top
-DR9C2     D         LED_0603_BLANK     -64.3534    -0.4267    0.0000  top
-DR9C3     D         LED_0603_BLANK     -55.9664    -0.6604    0.0000  top
-DR9C4     D         LED_0603_BLANK     -47.8612    -0.8865    1.0000  top
-DR9C5     D         LED_0603_BLANK     -39.5351    -1.2776    0.0000  top
-DR9C6     D         LED_0603_BLANK     -29.8094    -1.4427    0.0000  top
-DR9C7     D         LED_0603_BLANK     -20.0330    -1.6688    0.0000  top
-DR9C8     D         LED_0603_BLANK      -9.9974     3.4544    0.0000  top
-DR9C9     D         LED_0603_BLANK      -0.1016     3.2106    0.0000  top
-DR9C10    D         LED_0603_BLANK       8.8595     3.6982    0.0000  top
-DR9C11    D         LED_0603_BLANK      17.6987     3.7389    0.0000  top
-DR9C12    D         LED_0603_BLANK      26.8021     4.0437    0.0000  top
-DR9C13    D         LED_0603_BLANK      35.0723     3.8202    0.0000  top
-DR9C14    D         LED_0603_BLANK      44.0944     3.6576  357.5000  top
-DR9C15    D         LED_0603_BLANK      52.0802     3.6119    0.0000  top
-DR9C16    D         LED_0603_BLANK      59.6240     3.4722  357.5000  top
-DR9C17    D         LED_0603_BLANK      66.3245     3.3122  357.5000  top
-DR9C18    D         LED_0603_BLANK      73.0098     3.2512    2.5000  top
-DR10C1    D         LED_0603_BLANK     -72.7151    -1.7120    0.0000  top
-DR10C2    D         LED_0603_BLANK     -64.5566    -2.7737  352.5000  top
-DR10C3    D         LED_0603_BLANK     -56.3321    -3.4950    0.0000  top
-DR10C4    D         LED_0603_BLANK     -48.1787    -4.2266  357.5000  top
-DR10C5    D         LED_0603_BLANK     -39.7586    -4.8133  352.5000  top
-DR10C6    D         LED_0603_BLANK     -30.4597    -5.5677  355.0000  top
-DR10C7    D         LED_0603_BLANK     -20.7315    -6.0833  355.0000  top
-DR10C8    D         LED_0603_BLANK     -10.3429    -2.0523    0.0000  top
-DR10C9    D         LED_0603_BLANK      -0.4191    -1.6408    0.0000  top
-DR10C10   D         LED_0603_BLANK       9.2761    -1.6408    0.0000  top
-DR10C11   D         LED_0603_BLANK      17.8410    -1.3818    0.0000  top
-DR10C12   D         LED_0603_BLANK      26.9443    -1.2192    0.0000  top
-DR10C13   D         LED_0603_BLANK      36.0477    -1.0973    0.0000  top
-DR10C14   D         LED_0603_BLANK      44.2570    -0.8941    0.0000  top
-DR10C15   D         LED_0603_BLANK      52.1919    -0.5232    0.0000  top
-DR10C16   D         LED_0603_BLANK      59.9313    -0.4115    2.5000  top
-DR10C17   D         LED_0603_BLANK      66.5277    -0.2032    2.5000  top
-DR10C18   D         LED_0603_BLANK      73.1622     0.2692    5.0000  top
-DR11C1    D         LED_0603_BLANK     -72.6846    -3.1293  355.0000  top
-DR11C2    D         LED_0603_BLANK     -65.0646    -4.8565  347.5000  top
-DR11C3    D         LED_0603_BLANK     -56.9265    -6.2992  355.0000  top
-DR11C4    D         LED_0603_BLANK     -48.8086    -7.3355  355.0000  top
-DR11C5    D         LED_0603_BLANK     -40.5435    -8.0975  355.0000  top
-DR11C6    D         LED_0603_BLANK     -31.1912    -9.1643  352.5000  top
-DR11C7    D         LED_0603_BLANK     -21.8211    -9.8552  355.0000  top
-DR11C8    D         LED_0603_BLANK     -11.2573    -6.2535    0.0000  top
-DR11C9    D         LED_0603_BLANK      -1.0312    -6.5024    0.0000  top
-DR11C10   D         LED_0603_BLANK       8.3820    -6.1671    0.0000  top
-DR11C11   D         LED_0603_BLANK      17.0739    -6.0858    0.0000  top
-DR11C12   D         LED_0603_BLANK      26.2077    -5.7201    0.0000  top
-DR11C13   D         LED_0603_BLANK      35.9461    -5.3238    5.0000  top
-DR11C14   D         LED_0603_BLANK      44.1147    -4.9378    0.0000  top
-DR11C15   D         LED_0603_BLANK      52.2478    -4.3231    2.5000  top
-DR11C16   D         LED_0603_BLANK      59.8475    -3.8202    5.0000  top
-DR11C17   D         LED_0603_BLANK      66.4058    -3.1699    5.0000  top
-DR11C18   D         LED_0603_BLANK      72.9945    -2.3368    7.5000  top
-DR12C1    D         LED_0603_BLANK     -73.0504    -4.7142  350.0000  top
-DR12C2    D         LED_0603_BLANK     -65.7555    -6.9494  342.5000  top
-DR12C3    D         LED_0603_BLANK     -58.0695    -8.7071  352.5000  top
-DR12C4    D         LED_0603_BLANK     -49.6621   -10.2819  350.0000  top
-DR12C5    D         LED_0603_BLANK     -41.5493   -11.2674  352.5000  top
-DR12C6    D         LED_0603_BLANK     -32.2072   -12.5374  355.0000  top
-DR12C7    D         LED_0603_BLANK     -22.8829   -13.2359  355.0000  top
-DR12C8    D         LED_0603_BLANK     -12.1209   -10.4038  357.5000  top
-DR12C9    D         LED_0603_BLANK      -1.2294   -10.3784    0.0000  top
-DR12C10   D         LED_0603_BLANK       7.4600   -10.1625    2.5000  top
-DR12C11   D         LED_0603_BLANK      16.4008    -9.9949    2.5000  top
-DR12C12   D         LED_0603_BLANK      25.7607    -9.4361    5.0000  top
-DR12C13   D         LED_0603_BLANK      35.3162    -8.6360    5.0000  top
-DR12C14   D         LED_0603_BLANK      44.0131    -7.9451    5.0000  top
-DR12C15   D         LED_0603_BLANK      51.9405    -7.2288    5.0000  top
-DR12C16   D         LED_0603_BLANK      59.6519    -6.4186    7.5000  top
-DR12C17   D         LED_0603_BLANK      66.2635    -5.7506    7.5000  top
-DR12C18   D         LED_0603_BLANK      72.7659    -4.6380   10.0000  top
-DR13C1    D         LED_0603_BLANK     -73.6397    -6.3805  340.0000  top
-DR13C2    D         LED_0603_BLANK     -66.5480    -8.8189  340.0000  top
-DR13C3    D         LED_0603_BLANK     -59.3649   -11.3589  350.0000  top
-DR13C4    D         LED_0603_BLANK     -50.8610   -13.1877  347.5000  top
-DR13C5    D         LED_0603_BLANK     -42.6314   -14.3612  350.0000  top
-DR13C6    D         LED_0603_BLANK     -33.2029   -15.7683  352.5000  top
-DR13C7    D         LED_0603_BLANK     -24.3357   -16.6167  355.0000  top
-DR13C8    D         LED_0603_BLANK     -13.1877   -13.5534  357.5000  top
-DR13C9    D         LED_0603_BLANK      -1.9837   -13.6830    2.5000  top
-DR13C10   D         LED_0603_BLANK       6.7615   -13.4315    2.5000  top
-DR13C11   D         LED_0603_BLANK      15.7302   -12.9565    2.5000  top
-DR13C12   D         LED_0603_BLANK      24.9225   -12.2860    2.5000  top
-DR13C13   D         LED_0603_BLANK      34.6050   -11.4808    5.0000  top
-DR13C14   D         LED_0603_BLANK      43.6880   -10.6070    5.0000  top
-DR13C15   D         LED_0603_BLANK      51.4655    -9.6317    7.5000  top
-DR13C16   D         LED_0603_BLANK      59.0652    -8.8773    5.0000  top
-DR13C17   D         LED_0603_BLANK      65.8774    -7.9451   10.0000  top
-DR13C18   D         LED_0603_BLANK      72.4306    -6.7107   10.0000  top
-DR14C1    D         LED_0603_BLANK     -74.4322    -8.0264  335.0000  top
-DR14C2    D         LED_0603_BLANK     -67.5234   -10.8306  337.5000  top
-DR14C3    D         LED_0603_BLANK     -60.4317   -13.5077  342.5000  top
-DR14C4    D         LED_0603_BLANK     -52.1614   -15.8090  347.5000  top
-DR14C5    D         LED_0603_BLANK     -44.0741   -17.2923  350.0000  top
-DR14C6    D         LED_0603_BLANK     -34.9504   -18.6334  352.5000  top
-DR14C7    D         LED_0603_BLANK     -26.3810   -19.7801  355.0000  top
-DR14C8    D         LED_0603_BLANK     -14.4678   -16.7640    0.0000  top
-DR14C9    D         LED_0603_BLANK      -3.1013   -16.8402    0.0000  top
-DR14C10   D         LED_0603_BLANK       5.4762   -16.7005    2.5000  top
-DR14C11   D         LED_0603_BLANK      14.3612   -16.2535    5.0000  top
-DR14C12   D         LED_0603_BLANK      23.7998   -15.5194    6.0000  top
-DR14C13   D         LED_0603_BLANK      34.0766   -14.3866    5.0000  top
-DR14C14   D         LED_0603_BLANK      43.2206   -13.2283    7.5000  top
-DR14C15   D         LED_0603_BLANK      50.7390   -12.1742    7.5000  top
-DR14C16   D         LED_0603_BLANK      58.4505   -11.0846    7.5000  top
-DR14C17   D         LED_0603_BLANK      65.3085    -9.9162   10.0000  top
-DR14C18   D         LED_0603_BLANK      71.9734    -8.5852   10.0000  top
-DR15C1    D         LED_0603_BLANK     -75.9155   -10.0584  327.5000  top
-DR15C2    D         LED_0603_BLANK     -69.2709   -13.1267  332.5000  top
-DR15C3    D         LED_0603_BLANK     -62.1690   -16.2357  340.0000  top
-DR15C4    D         LED_0603_BLANK     -53.5026   -18.4912  347.5000  top
-DR15C5    D         LED_0603_BLANK     -45.5727   -20.0457  347.5000  top
-DR15C6    D         LED_0603_BLANK     -36.5963   -21.3766  352.5000  top
-DR15C7    D         LED_0603_BLANK     -27.1856   -22.3164  355.0000  top
-DR15C8    D         LED_0603_BLANK     -15.8411   -19.8787  357.5000  top
-DR15C9    D         LED_0603_BLANK      -4.6101   -20.1930    0.0000  top
-DR15C10   D         LED_0603_BLANK       4.0792   -19.9415    2.5000  top
-DR15C11   D         LED_0603_BLANK      12.7965   -19.4945    2.5000  top
-DR15C12   D         LED_0603_BLANK      22.6365   -18.6538    6.0000  top
-DR15C13   D         LED_0603_BLANK      32.7152   -17.3330    7.5000  top
-DR15C14   D         LED_0603_BLANK      42.1640   -15.9512    7.5000  top
-DR15C15   D         LED_0603_BLANK      49.9008   -14.7447    7.5000  top
-DR15C16   D         LED_0603_BLANK      57.7520   -13.4036   10.0000  top
-DR15C17   D         LED_0603_BLANK      64.6786   -11.9482   12.5000  top
-DR15C18   D         LED_0603_BLANK      71.5620   -10.2768   12.5000  top
-DR16C1    D         LED_0603_BLANK     -78.1406   -12.1971  327.5000  top
-DR16C2    D         LED_0603_BLANK     -71.4248   -15.5448  335.0000  top
-DR16C3    D         LED_0603_BLANK     -63.9216   -18.6131  340.0000  top
-DR16C4    D         LED_0603_BLANK     -55.0469   -21.0109  345.0000  top
-DR16C5    D         LED_0603_BLANK     -47.0205   -22.5146  347.5000  top
-DR16C6    D         LED_0603_BLANK     -37.9781   -23.6118  355.0000  top
-DR16C7    D         LED_0603_BLANK     -29.2100   -24.2316  357.5000  top
-DR16C8    D         LED_0603_BLANK     -17.5311   -22.6822  358.0000  top
-DR16C9    D         LED_0603_BLANK      -5.9512   -22.9591    0.0000  top
-DR16C10   D         LED_0603_BLANK       2.2352   -23.0149    2.5000  top
-DR16C11   D         LED_0603_BLANK      11.1201   -22.4561    5.0000  top
-DR16C12   D         LED_0603_BLANK      21.2700   -21.4325    7.5000  top
-DR16C13   D         LED_0603_BLANK      31.0286   -20.1778    8.0000  top
-DR16C14   D         LED_0603_BLANK      40.9042   -18.6741    8.0000  top
-DR16C15   D         LED_0603_BLANK      48.6994   -17.2314    9.0000  top
-DR16C16   D         LED_0603_BLANK      56.6776   -15.6718   10.0000  top
-DR16C17   D         LED_0603_BLANK      78.4835    -1.6688   14.0000  top
-DR16C18   D         LED_0603_BLANK      78.1609    -3.4646   14.0000  top
-OL***     LZ-OL     LZ_OL_Rev2           0.0000     0.0000    0.0000  top
-R42       0         BRIDGER             -5.2198    -9.3218    0.0000  top
-R43       0         BRIDGER             -5.2832   -11.3538    0.0000  top
-R44       0         BRIDGER             -5.3340   -13.3858    0.0000  top
-R45       0         BRIDGER             -5.3722   -15.9258    0.0000  top
-SM***     LZ-SM     LZ_SM_Rev2           0.0000     0.0000    0.0000  top
-SS***     LOGO      LZ_SS_Rev2           0.0000     0.0000    0.0000  top'''
+import fileinput
+import os
 
 def transrotate(value):
 	if value <= 180:
@@ -307,15 +14,40 @@ def transrotate(value):
 		value -= 180
 		return int(0-(180-value))
 
-rawprocessor = list()
-for i in raw.split('\n'):
-    rawprocessor.append(i.split())
+def process_pos_lines(pos_lists):
+        output_string = "Designator,Footprint,Mid X,Mid Y,Layer,Rotation,Comment\n"
+        output_string += ",,,,,,\n"
+        for line in pos_lists:
+                if line[0][0] == '#':
+                        continue
+                outline = line[0] + "," + line[1] + ","
+                outline += line[3].split('.')[0] + "." + line[3].split('.')[1][:2] + "mm,"
+                outline += line[4].split('.')[0] + "." + line[4].split('.')[1][:2] + "mm,"
+                if line[-1] == "top":
+                        outline += "T,"
+                else:
+                        outline += "B,"
+                outline += str(transrotate(float(line[5]))) + "," + line[2]
+                output_string += outline + '\n'
+        return output_string
 
-print "Designator,Footprint,Mid X,Mid Y,Layer,Rotation,Comment"
-print ",,,,,,"
-for line in rawprocessor:
-    outline = line[0] + "," + line[1] + ","
-    outline += line[3].split('.')[0] + "." + line[3].split('.')[1][:2] + "mm,"
-    outline += line[4].split('.')[0] + "." + line[4].split('.')[1][:2] + "mm,"
-    outline += trailing_letter + "," + str(transrotate(float(line[5]))) + "," + line[2]
-    print outline
+#Turn input .pos file into a list of lists
+pos_lines = list()
+for line in fileinput.input():
+        pos_lines.append(line.strip('\n').split())
+
+cur_dir = os.getcwd()
+filename = fileinput.filename()
+if filename[-4:] != ".pos":
+        print("WARNING: Input file doesn't have expected '.pos' extension")
+print("Parsing " + filename)
+
+neoden_format = process_pos_lines(pos_lines)
+#Strip trailing newline character
+if neoden_format[-2:] == '\n':
+        neoden_format = neoden_format[:-2]
+        
+output_file = os.path.splitext(os.path.join(cur_dir,filename))[0]+"_neoden.csv"
+
+with open(output_file, 'w') as ofile:
+        ofile.write(neoden_format)
