@@ -31,23 +31,29 @@ def process_pos_lines(pos_lists):
                 output_string += outline + '\n'
         return output_string
 
-#Turn input .pos file into a list of lists
-pos_lines = list()
-for line in fileinput.input():
-        pos_lines.append(line.strip('\n').split())
+def main():
+        #Turn input .pos file into a list of lists
+        pos_lines = list()
+        for line in fileinput.input():
+                pos_lines.append(line.strip('\n').split())
 
-cur_dir = os.getcwd()
-filename = fileinput.filename()
-if filename[-4:] != ".pos":
-        print("WARNING: Input file doesn't have expected '.pos' extension")
-print("Parsing " + filename)
+        cur_dir = os.getcwd()
+        filename = fileinput.filename()
+        if filename[-4:] != ".pos":
+                print("WARNING: Input file doesn't have expected '.pos' extension")
+        print("Parsing " + filename)
 
-neoden_format = process_pos_lines(pos_lines)
-#Strip trailing newline character
-if neoden_format[-2:] == '\n':
-        neoden_format = neoden_format[:-2]
-        
-output_file = os.path.splitext(os.path.join(cur_dir,filename))[0]+"_neoden.csv"
+        neoden_format = process_pos_lines(pos_lines)
+        #Strip trailing newline character
+        if neoden_format[-2:] == '\n':
+                neoden_format = neoden_format[:-2]
 
-with open(output_file, 'w') as ofile:
-        ofile.write(neoden_format)
+        print("Writing CSV file")
+        output_file = os.path.splitext(os.path.join(cur_dir,filename))[0]+"_neoden.csv"
+
+        with open(output_file, 'w') as ofile:
+                ofile.write(neoden_format)
+        print("Successfully wrote:",output_file)
+
+if __name__ == '__main__':
+        main()
