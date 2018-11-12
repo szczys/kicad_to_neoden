@@ -19,11 +19,13 @@ This script performs the following:
 
 ## Syntax example
 
-Input example line:
+Input example lines:
 
-`R1        4k7           R_0603                     154.2720  -121.1820   90.0000  top`
+```C2        0.1uF         LED_0603                   148.6840  -121.1820  270.0000  top
+R1        4k7           R_0603                     154.2720  -121.1820   90.0000  top```
 
-Output example line:
+Output example lines:
 
-`R1,4k7,154.27mm,-121.18mm,T,90,R_0603`
+```C2,0.1uF,148.68mm,-121.18mm,T,-90,LED_0603
+R1,4k7,154.27mm,-121.18mm,T,90,R_0603```
 
