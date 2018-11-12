@@ -6,6 +6,7 @@ from __future__ import print_function
 
 import fileinput
 import os
+import sys
 
 def transrotate(value):
 	if value <= 180:
@@ -32,6 +33,10 @@ def process_pos_lines(pos_lists):
         return output_string
 
 def main():
+        if len(sys.argv) != 2:
+                print("Syntax error!")
+                print("Usage: python kicad_to_neoden.py your_position_file_from_kicad.pos")
+                return
         #Turn input .pos file into a list of lists
         pos_lines = list()
         for line in fileinput.input():
